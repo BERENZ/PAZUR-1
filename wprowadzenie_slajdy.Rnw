@@ -1,0 +1,1352 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+
+
+%jakie? jeszcze pakiety%
+
+% There are many different themes available for Beamer. A comprehensive
+% list with examples is given here:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+% You can uncomment the themes below if you would like to use a different
+% one:
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+\usetheme{Boadilla}
+%\usetheme{boxes}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{default}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+\title{Wprowadzenie do R}
+
+% A subtitle is optional and this may be deleted
+% \subtitle{Optional Subtitle}
+
+\author[Szabelska A., Zyprych-Walczak J.]{Alicja Szabelska\inst{1} \and Joanna Zyprych-Walczak\inst{1}}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[UP] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Katedra Metod Matematycznych i Statystycznych\\
+  Uniwersytet Przyrodniczy w Poznaniu
+ % \and
+  %\inst{2}%
+  %Department of Theoretical Philosophy\\
+  %University of Elsewhere
+  }
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+\date[PAZUR - warsztaty, 2014]{PAZUR - warsztaty, październik 2014}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{Theoretical Computer Science}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+
+\AtBeginSection[]
+{
+\begin{frame}
+\frametitle{Przejdźmy do..}
+\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+}
+% Let's get started
+\begin{document}
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(dev = 'pdf', fig.path='figure/beamer-',fig.height=3,fig.width=3,fig.align='center',fig.show='hold',size='footnotesize')
+options(width=60)
+@
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Rozkład jazdy..}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Section and subsections will appear in the presentation overview
+% and table of contents.
+
+
+\section{Wprowadzenie do R i RStudio}
+
+\begin{frame}{Parę słów o R}
+\begin{itemize}
+\item Inspiracja - jezyk programowania S
+\item Roberta Gentlemana i Rossa Ihake (Wydział Statystyki Uniwersytetu w Auckland)
+\item Projekt GNU - powszechna dostępność dla wszystkich użytkowników 
+\item Dziedziny wykorzystania: liniowe i nieliniowe
+programowanie, statystyczne testowanie, analiza czasowa, analiza dyskryminacyjna,
+metody numeryczne, algebra, analiza eksperymentu...
+\item 8 podstawowych pakietów zawartych podczas instalacji, 5900 pakietów dodatkowych
+\item Zalety: \alert{Powszechność, darmowość i ogromna funkcjonalność}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Parę słów o RStudio}
+\begin{itemize}
+\item Darmowość i ogólnodostępność na wszystkich systamach
+\item Łatwe zarzadzanie wieloma plikami za pomocą projektów
+\item Szybkie instalowanie pakietów
+\item Łatwe edytowanie składni (podświetlanie tekstu, uzupełnianie istniejących nazw funkcji, zmiennych i słów kluczowych)
+\item Wsparcie dla pakietów: \texttt{knitr, Sweave, shiny}
+\item Podgląd danych oraz wykresów w osobnych oknach
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Instalacja}
+\begin{itemize}
+\item Instalacja R - http://www.r-project.org
+\item Instalacja RStudio - http://rstudio.org/download/desktop
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Pakiety i dane w nich zawarte}
+\begin{itemize}
+\item Pakiety R są zbiorem funkcji i danych.
+\item Pełna lista pakietów: http://cran.r-project.org/web/packages
+\item Instalacja pakietów - \emph{install.packages()}, ładowanie pakietów do pamięci - \emph{library()}
+\item Wywoływanie danych zawartych w pakiecie: \emph{data('nazwa danych')}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pierwsze uruchomienie}
+\begin{block}{Szukanie pomocy}
+?sum, help(sum) \\
+apropos(sum) \\
+example(matrix) \\
+??sum, help.search('sum')
+\end{block}
+\begin{exampleblock}{Przydatne skróty klawiszowe w RStudio}
+uzupełnianie nazw funkcji i obiektów -'tab' \\
+wyświetlanie kodu funkcji - klawisz F2 \\
+wyświetlanie pomocy na temat funkcji - klawisz F1 \\
+zamknięcie programu - ctrl+q \\
+zamknięcie skryptu - ctrl+w
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Pierwsze uruchomienie - ćwiczenia}
+\begin{itemize}
+\item Zainstaluj pakiet ‘aplpack’, dowiedz się czegoś o funkcji ‘faces’ i narysuj bazując na tych informacjach zestaw twarzy z tematyką świąt Bożego Narodzenia.
+\item Znajdź, jakie funkcje istnieją w R, które powiązane są ze słowem kluczowym ‘ test’
+\item Zainstaluj pakiet 'effects'. Sprawdź czego dotyczą dane TitanicSurvival.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Podstawy składni R}
+\begin{itemize}
+\item Znak przypisania: <- lub = 
+\item {Nazwy obiektów mogą zawierać:
+duże i małe litery (UWAGA: wielkość znaków jest rozróżnialna), \\
+liczby (UWAGA: nazwy nie mogą się zaczynac od liczby), \\
+znaki interpunkcyjne . oraz \_ (UWAGA: nazwy nie mogą się zaczynac od \_) }
+\item Korzystając z funkcji jej argumenty są umieszczane w okrąłych nawiasach () i rozdzielane są za pomocą przecinka
+\end{itemize}
+\end{frame}
+
+\section{Obiekty w R}
+\begin{frame}{Obiekty}
+\begin{block}{W R dostępne są następujące typy obiektów:}
+\begin{itemize}
+\item wektor (funkcja \emph{c()})
+\item macierz (funkcja \emph{matrix()})
+\item ramka danych (funkcja \emph{data.frame()})
+\item lista (funkcja \emph{list()})
+\end{itemize}
+\end{block}
+\begin{block}{Obiekty mogą być następujących klas:}
+\begin{itemize}
+\item znakowa (funkcja \emph{character()})
+\item logiczna (funkcja \emph{logical()})
+\item numeryczna (funkcja \emph{numeric()})
+\item czynnikowa (funkcja \emph{factor()})
+\item pusta (funkcja \emph{NULL})
+\end{itemize}
+\end{block}
+\end{frame}
+
+\subsection{Podstawowe operacje na obiektach}
+\begin{frame}{Podstawowe operacje arytmetyczne}
+\begin{table}[htdp]
+\centering
+\begin{tabular}{lcc}
+\hline
+Funkcja w R & Opis & Przykład użycia  \\ \hline 
+$+,-$ & dodawanie, odejmowanie & $1+2$,$3-2$ \\ \hline
+$*,/$ & mnożenie, dzielenie & $5*4$,$8/4$ \\ \hline
+sqrt(4),\^ & pierwiastkowanie, potęgowanie & sqrt(4), 3\^\,5 \\ \hline
+\%\% & reszta z dzielenia & $10\, \%\%\, 3$ \\\hline
+log, log2, exp & logarytm, eksponenta  & log(2),log2(5), exp(1) \\\hline
+round & zaokrąglenie liczby & round(3.8), round(pi) \\\hline
+abs & wartość bezwzględna & abs(-34) \\\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Operatory logiczne}
+\begin{table}[htdp]
+\centering
+\scriptsize{
+\begin{tabular}{p{2cm}p{5cm}l}
+\hline
+Operator & Opis & Przykład użycia  \\ \hline
+TRUE(T), FALSE(F) & prawda, fałsz & T, F \\ \hline
+! & zaprzeczenie & !T, !FALSE \\ \hline
+== & równość & 5==3\\ \hline
+!=  & nierówność & "Kasia"!="Krysia"\\ \hline
+\& &  oraz & TRUE \& FALSE \\ \hline
+| & lub & F|T \\ \hline
+\%in\% &  czy znajduje się w wektorze & c(3,5) \%in\% 1:4\\ \hline
+>, <, & większe, mniejsze & 4<7 \\ \hline
+>=, <= & większe lub równe, mniejsze lub równe & 3>=2 \\ \hline
+\&\& & sprawdza wszystkie elementy & 1:7>=4 \&\& 1:7<6\\ \hline
+|| & sprawdza wszystkie elementy & 1:7>=4 || 1:7<6\\ \hline
+all & sprawdza czy wszystkie elementy spełniają warunek & all(1:7>=4)\\ \hline
+any & sprawdza czy którykolwiek z elementów spełnia warunek & any(1:7>=4)\\ \hline
+is.<obiekt/typ> & sprawdza czy obiekt jest danej klasy & is.vector(1:4) \\ \hline
+which & zwraca indeksy obiektu spełniające warunek & which(1:10>4) \\ \hline
+\end{tabular}
+}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Wektory}
+Przykłady wektorów:
+<<>>=
+A <- 1:4 # wektor numeryczny zawierający wartości 1, 2, 3, 4
+B <- c(1, 2, 5.3, 6, -2, 4) # wektor numeryczny
+C <- c("jeden", "dwa", "trzy") # wektor znakowy
+D <- c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE) # wektor logiczny
+@
+Łączenie dwóch wektorów:
+<<>>=
+x <- c(2,3,5,2,7,1)
+y <- c(10,15,12)
+z <- c(x, y)
+z
+@
+\end{frame}
+\begin{frame}[fragile]{Wektory - c.d.}
+Alternatywne metody tworzenia wektorów:
+<<>>=
+rep(c(1,2), times = 3) # Jeśli chcemy powielić jakiś wektor parę razy
+rep(c(1,2), each = 3)  # Jeśli chcemy powielić elementy wektora parę razy
+seq(from = 1 , to= 10, by =2 ) # Tworzy sekwencję liczb (od 1 do 10 co 2)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Odwoływanie się do elementów wektora}
+<<>>=
+x[1:3]# Odwoładnie się do elementów wektora x stojących na pozycjach 1:3
+x[c(2,4)] # Wyciąganie podzbioru 2 i 4 z wektora x
+x[-c(2,3)] # Podzbiór wektora x bez elementu 2 i 3
+a<-x>5 # Generuje wektor logiczny o wartościach (T or F)
+b<-x[x>6] # Podzbiór wektora x - wyciągane są tylko te wartości wektora x
+# które są większe od 6 (możliwe relacje dla wyłączania podzbiorów <, 
+# <=, >, >=, ==, i !=).
+@
+\end{frame}
+
+% \begin{frame}[fragile]{Wektory - użyteczne funkcje}
+% <<>>=
+% match
+% unique
+% itersect
+% @
+% \end{frame}
+
+\begin{frame}{Wektory - użyteczne funkcje}
+\begin{block}{}
+\begin{itemize}
+\item length() - zwraca liczbę elementów wektora
+\item sum() - wyznacza sumę wszystkich elementów wektora
+\item prod()- wyznacza iloczyn wszystkich elementów wektora
+\item cumsum(), cumprod() - wyznacza sumę i iloczyn skumulowany
+\item sort() - sortuje wektor
+\item order() - podaje indeksy posortowanych elementów 
+\item diff() - wyznacza różnice pomiędzy elementami oddalonymi od siebie o wartość parametru lag 
+\item print() - wyświetla obiekty
+\item cat() - wyświetla obiekty łącząc je w jeden napis
+\item paste() - tworzy łańcuch tekstowy z podanych argumentów
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Przykłady użycia funkcji:}
+<<>>=
+s <- c(1,1,3,4,7,11)
+length(s)
+sum(s) # 1+1+3+4+7+11
+prod(s) # 1*1*3*4*7*11
+cumsum(s)
+diff(s) # 1-1, 3-1, 4-3, 7-4, 11-7
+diff(s, lag = 2) # 3-1, 4-1, 7-3, 11-4
+@
+\end{frame}
+
+
+\begin{frame}[fragile]{Przykłady użycia funkcji:}
+<<>>=
+zm <- 'zmienna'
+paste(zm, 1:6, sep='_')
+paste(zm,1:3)
+iter<-1:6
+cat("iteration = ", iter <- iter + 1, "\n")
+x<-'I love R'
+print(x)
+@
+\end{frame}
+\begin{frame}{Wektory - ćwiczenia}
+\begin{itemize}
+\item  Wprowadź dowolne wektory x,y,z. Wykonaj następujące operacje na danych x,y,z:
+ \begin{itemize}
+ \item y-z, x+y, x/2, ln(x) – cos y
+\end{itemize}
+\item Stwórz dane, które będą zawierały 8 jedynek i zapisz je pod zmienną cc, a następnie utwórz dane zawierające 199 zer i zapisz pod zmienną d.
+\item Oblicz:
+$10^2+11^2+...+20^2$,
+$\sqrt(log(1))+\sqrt(log(10))+...+\sqrt(log(100))$
+\item Użyj funkcji rep żeby utworzyć następujące dane
+\begin{itemize}
+\item	1 1 1 1 1 1 1 1 
+\item 1 2 1 2 1 2 1 2 1 2 1 2
+\item 0 0 0 0 0 0 0 0 1 1 1 1
+\item 4 3 3 2 2 2 1 1 1 1
+\item 23   23  23  32  42  42
+\item „A”  „B”  „A”  „B”  „A”  „B”  
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{Macierze}
+Przykłady macierzy:
+<<>>=
+macierz1 <- matrix(1:6,3,2)
+macierz1
+macierz2 <- matrix(1:6,3,2,byrow=T)
+macierz2
+@
+\end{frame}
+
+\begin{frame}[fragile]{Macierze}
+Przykłady macierzy:
+<<>>=
+macierz3 <- matrix(c(1, 2, 5.3, 6, -2, 4), 2, 3)
+macierz3
+macierz4<-matrix(c(1, 2, 5.3, 6, -2, 4), 3, 2)
+macierz4
+@
+\end{frame}
+
+\begin{frame}[fragile]{Macierze}
+Łączenie dwóch macierzy:
+<<>>=
+cbind(1:4,5:8) 
+rbind(1:4,5:8)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Odwoływanie się do elementów macierzy}
+<<>>=
+a<-matrix(1:9,3,3)
+a[,1] # pierwsza kolumna
+a[1,] # pierwszy wiersz
+a[1,1] # pierwszy element (i=1,j=1)
+diag(a) ## digonalna
+@
+\end{frame}
+
+\begin{frame}{Macierze - użyteczne funkcje}
+\begin{block}{}
+\begin{itemize}
+\item dim() - zwraca wymiar macierzy
+\item \%*\% - wyznacza iloczyn macierzy
+\item t()- wyznacza transpozycję macierzy
+\item det() - wyznacza determinantę macierzy
+\item solve() - wyznacza macierz odwrotną
+\item ncol(), nrow() - zwraca liczbę kolumn, wierszy macierzy
+\item colnames(), rownames() - zwraca nazwy kolumn, wierszy
+\item colSums(), rowSums() - zwraca sumę kolumn, wierszy
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji:}
+<<>>=
+C<-matrix(1:4,2,2)
+dim(C)
+colnames(C)<-c('C1','C2')
+rownames(C)<-c('R1','R2')
+colSums(C)
+rowSums(C)
+@
+\end{frame}
+
+\begin{frame}{Macierze - ćwiczenia}
+1. Zadeklaruj poniższe macierze:
+
+$$A =
+ \begin{pmatrix}
+1 &  2 & -1&  0 \\ 
+3 & -2 & 4 & 5 \\
+2 & 6 & 5 & -3 \\
+0 & 1&  5&  -4 \\
+ \end{pmatrix}
+$$
+$$
+B =
+ \begin{pmatrix}
+3 & 6 \\
+4 & 0 \\ 
+2 & -1 \\ 
+1 & 1 \\ 
+ \end{pmatrix}
+$$
+
+Oblicz wyznacznik macierzy $\textbf{A}$, znajdź iloczyn $\textbf{AB}$, znajdź macierz transponowaną $\mathbf{B}^T$.
+
+\end{frame}
+
+\begin{frame}{Macierze - ćwiczenia}
+
+2.  Dana jest macierz \textbf{A}:
+$$
+A =
+ \begin{pmatrix}
+2&  3\\
+1&  4\\
+ \end{pmatrix}
+$$
+
+Obliczyć $\mathbf{A}^2-6\mathbf{A}+4\mathbf{I}$, gdzie $\mathbf{I}$ jest macierzą jednostkową postaci:
+$$
+I =
+ \begin{pmatrix}
+1&  0 \\
+0&  1 \\
+\end{pmatrix}
+$$
+
+3. Mając:
+$$
+A =
+ \begin{pmatrix}
+1 & -1 &5 \\
+2& 1& -4 \\
+\end{pmatrix},
+$$
+$$
+B =
+ \begin{pmatrix}
+-2 &-1& 2 \\
+3& 1& 4 \\
+\end{pmatrix},
+$$
+$$
+C =
+ \begin{pmatrix}
+0 &-3& 9 \\
+3 &18 &-6 \\
+\end{pmatrix}
+$$
+Oblicz:
+
+* $\mathbf{A}+\mathbf{B}$,
+* $\mathbf{A}-\mathbf{B}$,
+* $2\mathbf{A}+3\mathbf{B}$,
+* $\mathbf{A}^T-4\mathbf{B}^T$,  					
+
+\end{frame}
+
+\begin{frame}{Macierze - ćwiczenia}
+4. Zadeklaruj macierz A:
+
+$$
+A =
+ \begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9 \\
+\end{pmatrix}.
+$$
+
+Następnie, korzystając z funkcji R:
+
+* Wyznacz liczbę wierszy i kolumn macierzy $\textbf{A}$. \\
+* Wyznacz sumę wszystkich elementów macierzy $\textbf{A}$. \\
+* Wyznacz sumy wszytkich elementów w poszczególnych kolumnach macierzy $\textbf{A}$. \\
+* Wyznacz sumy wszytkich elementów w poszczególnych wierszach macierzy $\textbf{A}$. \\
+* Oblicz $A_{11}$ + $A_{32}$. \\
+* Wyświetl zawartość drugiej kolumny. \\
+* Wyświetl zawartość pierwszego wiersza. \\
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady ramek danych}
+<<tidy=FALSE>>=
+data.frame(imie=c('Asia','Kasia','Basia'), wiek=c(24,30,15),
+           oczy=factor(c('piwne','szare','piwne')))      
+data(iris) # wczytanie danych dostępnych w R
+head(iris) # wyświetlanie kilku pierwszych wartości
+@
+\end{frame}
+
+\begin{frame}[fragile]{Odwoływanie się do elementów ramek danych}
+<<>>=
+iris[1:10,1] # pierwsze dziesięć elementów z pierwszej kolumny
+iris[1:10,'Sepal.Length'] # lub równoznacznie
+iris$Sepal.Length[1:10] # lub równoznacznie
+iris$'Sepal.Length'[1:10] # lub...
+@
+\end{frame}
+
+\begin{frame}{Ramki danych - użyteczne funkcje}
+\begin{block}{}
+\begin{itemize}
+\item head() - wyświetla pierwsze rekordy zbioru
+\item attach() - pozwala odnosić się do nazw zmiennych znajdujących się bezpośrednio w danych
+\item detach() - likwiduje możliwość bezpośredniego odnoszenia się do zmiennych
+\item attributes(), str() - pozwala wyświetlić informacje o obiekcie
+\item complete.cases() - sprawdza ile wierszy w zbiorze zawiera wszystkie informacje
+\item duplicated() - sprawdza ile wierszy jest powtórzonych
+\item summary() - wyznacza podstawowe statystyki dla obiektu
+\item table() - wyznacza tabelę z liczbą wsytąpień danego czynnika
+\item subset() - określa podzbiór danego zbioru, spełniający określone warunki
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji:}
+<<>>=
+data(trees)
+head(trees)
+Girth
+attach(trees)
+Girth
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji - c.d.}
+<<>>=
+attributes(trees)
+str(trees)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji - c.d.}
+<<>>=
+complete.cases(trees)
+summary(trees)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji - c.d.}
+<<tidy=FALSE>>=
+ankieta<-data.frame(odpowiedzi=c('T','N','T','T','N','X','N','X','T'),
+                    wiek=c(16,23,22,65,45,32,24,12,56))
+table(ankieta$odpowiedzi)
+subset(ankieta,wiek>20)
+@
+\end{frame}
+
+\begin{frame}{Ramki danych - ćwiczenia}
+Załaduj dane TitanicSurvival z pakietu effects. Spróbuj odpowiedzieć na następujące pytania:
+\begin{enumerate}
+\item Ile jest osób w tym zestawie danych? 
+\item Ile jest w nich kobiet, a ile mężczyzn?
+\item Ile kobiet przeżyło? Ilu mężczyzn przeżyło?
+\item Ile kobiet z pierwszej klasy miało powyżej 30 lat?
+\item Ilu dzieci poniżej 5 lat przeżyło?
+\item Jaka jest proporcja (w \%) pomiędzy mężczyznami, a kobietami w 3 klasie?
+\item Jaka jest proporcja pomiędzy przeżytymi kobietami, a mężczyznami?
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady list}
+<<tidy=FALSE>>=
+pierwsza.lista<-list(imie=c('Asia','Kasia','Basia'), sredni.wiek=23,
+                       macierz=matrix(1:4,2,2))
+pierwsza.lista
+str(pierwsza.lista)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Odwoływanie się do elementów list}
+<<>>=
+pierwsza.lista$imie # odniesienie do elementu 'imię'
+pierwsza.lista$imie[1] # odniesienie do pierwszego elementu tej zmiennej
+pierwsza.lista[[1]][1] # to samo, lecz z wykorzystaniem numeru kolejnego
+pierwsza.lista$macierz[1,] # pierwszy wiersz elementu macierz
+@
+\end{frame}
+
+
+
+
+\subsection{I jeszcze trochę o obiektach...}
+\begin{frame}[fragile]{Operacje na plikach i katalogach}
+<<>>=
+sessionInfo() 
+@
+\end{frame}
+
+\begin{frame}[fragile]{Operacje na plikach i katalogach}
+<<eval=FALSE>>=
+# zwraca scieżkę ustawioną jako domyślną (warto z tego korzystać ponieważ
+# nie trzeba wtedy wpisywać za każdym razem ścieżki. Natomiast jeżeli 
+# działamy w RStudio i tworzymy projekty domyślna ścieżka jest tożsama 
+# z tą opisaną w pakiecie)
+getwd() 
+# jeżeli chcemy zmienić ścieżkę dostępu używamy funkcji setwd()
+setwd('/Users/') 
+# funkcja list files zwraca nam informację (a dokładnie wektor) o tym 
+# jakie pliki znajdują się w domyślnym folderze
+list.files() 
+@
+\end{frame}
+
+\begin{frame}[fragile]{Operacje na plikach i katalogach}
+<<eval=FALSE>>=
+# usuwamy pliki z dysku za pomocą file.remove()
+file.remove() 
+# zapisujemy obiekty znajdujace się w przestrzeni roboczej do pliku. 
+# UWAGA! Pliki zapisane w systemie 32 bitowym nie otworza się w 
+# systemie 64 bitowym! 
+save.image() 
+# funkcją save() możemy zapisać wybrany obiekt lub obiekty (a nie całą 
+# przestrzeń) do pliku z rozszerzeniem .RData
+save() 
+# ładujemy pliki do przestrzeni roboczej za pomocą load()
+load() 
+# kończymy działanie R (z poziomu konsoli) za pomocą q()
+@
+\end{frame}
+
+
+\section{Wczytywanie danych}
+
+\begin{frame}{Wczytywanie danych}
+\begin{block}{Odczytywanie danych z plików}
+\begin{itemize}
+\item txt - funkcja \emph{read.table()}, \emph{read.delim()}
+\item csv - funkcja \emph{read.csv()},\emph{read.csv2()}
+\item xlsx, xls - funcja \emph{xlsx()}, \emph{xls()} (pakiet XLConnect)
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Wczytywanie danych z plików tekstowych}
+<<eval=FALSE>>=
+A <- read.table(file = 'dane.txt', # podajemy plik wraz ze ścieżką
+                header=T, # określamy czy w pliku znajduje sie nagłówek
+                sep=';') # określamy co jest separatorem
+
+## trochę bardziej rozbudowany sposób wczytania plików
+A <- read.table(file = 'dane.txt', header = TRUE, sep = ';', 
+                dec = ',',  # określa symbol miejsca dziesiętnego
+                na.strings = 'NA', # określa oznaczanie braków w pliku
+                colClasses = c('numeric','numeric','character'), 
+                # przy dużych plikach przyspiesza wczytywanie danych
+                stringsAsFactors = FALSE) # domyślnie kolumny 
+                # zapisywane są jako factor
+@
+\end{frame}
+
+\begin{frame}[fragile]{Wczytywanie danych z Excela}
+<<eval=FALSE>>=
+### wczytanie plików Excela
+library(XLConnect)
+readWorksheetFromFile('plik.xlsx',
+                      sheet='Arkusz', ### nazwa arkusza, 
+# można również podać wiele arkuszy lub kolejne liczby
+                      header = T, ### czy w pierwszym 
+# wierszu znajdują się nazwy kolumn
+                      startRow = 1,
+                      startCol = 2)
+
+### istnieje również drugi sposób wczytania plików 
+skoroszyt<-loadWorkbook('plik.xlsx') ### wczytujemy 
+# skoroszyt do obiektu 
+getSheets(skoroszyt) ### pobieramy nazwy arkuszy
+dane<-readWorksheet(object = skoroszyt,  ### wczytujemy 
+# wybrany przez nas arkusz (lub arkusze)
+                    sheet = 'Arkusz')
+@
+\end{frame}
+\begin{frame}{Wczytywanie danych - ćwiczenia}
+Załaduj dane studenci.xlsx i odpowiedz na następujące pytania:
+\begin{itemize}
+\item Ile jest kobiet, a ilu mężczyzn studiuje Leśnictwo?
+\item Jaka jest średnia stypendium naukowego dla kobiet, a jaka dla mężczyzn?
+\item Ile kobiet studiuje rolnictwo?
+\item Ile studentów leśnictwa nie ma stypendium naukowego?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Wczytywanie danych - ćwiczenia}
+Załaduj dane.txt (separatorem jest tutaj tabulator) i odpowiedz na następujące pytania:
+\begin{itemize}
+\item Ile rodzin mieszka w mieście, a ile na wsi?
+\item Ile duzych  rodzin mieszka w mieście, a ile dużych mieszka na wsi?
+\item Ile rodzin jedzie na wakacje?
+\item Ile rodzin ze wsi, a ile z miasta jedzie na wakacje?
+\item Jaki jest maksymalny dochód rodzin dużych (malych) mieszkających w miescie, a jaki na wsi?
+\end{itemize}
+% A <- read.table(file = 'dane.txt',
+%                 header=T,
+%                 sep='\t')
+\end{frame}
+
+% \begin{frame}{Odpowiedzi - wczytywanie danych}
+% <<eval=FALSE>>=
+% library(XLConnect)
+% setwd("~/Desktop/warsztaty PAZUR")
+% dane<-readWorksheetFromFile('studenci.xlsx',
+%                       sheet='Arkusz1',
+%                       header = T)
+% dane <- loadWorkbook('studenci.xlsx')
+% @
+% \end{frame}
+
+
+\section{Pierwsze kroki do ...}
+
+\subsection{funkcja 'if', 'ifelse'}
+\begin{frame}[fragile]{Instrukcje warunkowe - if...else...}
+W R można korzystać z funkcji warunkowych typu if...else... Dzięki tej funkcji można uzależnić wykonywanie fragmentu kodu od spełnienia pewnego warunku logicznego. Składnia tej funkcji ma następującą postać:
+<<eval=FALSE>>=
+if (warunek) { 
+    polecenia
+}
+@
+lub 
+<<eval=FALSE>>=
+if (warunek) { 
+    polecenia
+} else if (warunek) { 
+    polecenia
+} else {
+    polecenia
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykład użycia funkcji if...else}
+<<>>=
+liczba <- sample(1:100,1)
+liczba
+if (liczba %% 3 == 0){
+  cat("ta liczba jest wielokrotnością 3\n")
+} else {
+  cat("ta liczba nie jest wielokrotnością 3\n")
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]{Instrukcje warunkowe - funkcja \emph{ifelse()}}
+Gdy chcemy wynonać ciąg poleceń warunkowych, możemy wykorzystać funkcję \emph{ifelse()}. Ma ona następującą składnię:
+<<eval=FALSE>>=
+ifelse(warunek, polecenie_1, polecenie_2) 
+# tutaj warunek może być jedną wartością logiczną lub wektorem logicznym
+@
+Przykład użycia tej funkcji:
+<<>>=
+ifelse(2:5 == 1, "hmmm... coś tu nie pasuje", "R potrafi liczyć") 
+@
+\end{frame}
+
+\subsection{funkcja 'for'}
+
+\begin{frame}[fragile]{Pętla \texttt{for}}
+Tak jak w każdym języku programowania w R również można tworzyć pętle. Schemat jej użycia wygląda następująco:
+<<eval=FALSE>>=
+for (iterator in zbiór){
+  polecenia
+}
+# iterator jest zmienną, która w każdym kroku pętli przyjmuje kolejne 
+# wartości ze obiektu zbiór
+@
+
+Pętla for ma z góry określoną liczbę iteracji.
+
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia pętli \texttt{for}}
+<<>>=
+for (i in 1:5) cat(paste0("w tym kroku wartość zmiennej i to ", i, "\n"))
+
+# jako zbiór względem którego pętla jest wykonywana może być również 
+# użyty wektor tekstowy:
+
+imiona <- c("Kasia", "Asia", "Basia")
+for (i in imiona) cat(paste0("w tym kroku zmienna i to ", i, "\n"))
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia pętli \texttt{for} - cd}
+W niektórych przypadkach użycie pętli może wiązać się z dużą ilością obliczeń. O ile to możliwe warto wykorzystywać obliczenia macierzowe lub inne dostępne funcje, które działają szybciej.
+<<eval=FALSE>>=
+Tabliczka <- matrix(NULL, 10, 10)
+for (i in 1:10) {
+  for (j in 1:10) {
+    Tabliczka[i,j] <- i*j
+  }
+}
+
+# to samo można zrobić za pomocą mnożenia macierzy:
+
+x <- 1:10
+Tabliczka1 <- x %*% t(x)
+
+# lub korzystając z funkcji outer():
+
+Tabliczka2 <- outer(x, x, '*')
+@
+\end{frame}
+
+\subsection{funkcja 'while'}
+
+\begin{frame}[fragile]{Pętla \texttt{while}}
+W przeciwieństwie do pętli \texttt{for} pętla \texttt{while} nie ma z góry określonej liczby powtórzeń. Jest ona wykonywana tak długo, jak spełniony jesy postawiony warunek. Schemat jej wywołania jest następujący:
+<<eval=FALSE>>=
+while (warunek) {
+  polecenia
+}
+@
+Istotne jest przy tworzeniu tej pętli jest zadbanie o to, aby w którymś momencie warunek nie został spełniony i pętla mogła zostać zakończona.
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia pętli \texttt{while}}
+<<>>=
+i <- 0
+while (i < 5) {
+  i <- i +1
+  print(i)
+}
+
+set.seed(100)
+while ((x <- sample(100,1)) %% 5 != 0) 
+  cat(x, ' ')
+@
+\end{frame}
+
+\subsection{Rodzina funcji apply}
+
+\begin{frame}{Rodzina funkcji apply}
+Do wykonywania obliczeń na różnego typu obiektach można zamiast pętli wykorzystywać również funkcje z rodziny apply. Są one często szybszą alternatywą do używania pętli i łatwym sposobem na wyznaczenie różnych charakterystyk obiektów. Funcje z tej rodziny wykonują operacje określone przez argument FUN. Główną różnicą między tymi funkcjami jest typ obiektów, na których operacje są wykonywane. Do rodziny apply należą m.in. funkcje:
+\begin{itemize}
+\item apply() - wykonywana na kolumnach lub wierszach macierzy
+\item lapply() - wykonywana na elementach listy
+\item sapply() - wykonywana na elementach wektora (może zastępować pętlę for)
+\item tapply()/by() - wykonywana na podzbiorach wektora (oraz macierzy lub listy - funkcja by)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji apply}
+<<message=F>>=
+library("effects")
+dane <- TitanicSurvival[,c(1:2,4)]
+apply(dane,2,table)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji by}
+<<>>=
+by(TitanicSurvival$age, TitanicSurvival$sex, mean, na.rm = T)
+@
+
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady użycia funkcji sapply}
+<<>>=
+czy.mlodszy.niz.10 <- function(x) (x < 10)
+wyn <- sapply(TitanicSurvival$age, FUN = czy.mlodszy.niz.10)
+head(wyn)
+summary(wyn)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Tworzenie własnych funkcji}
+Oprócz isteniących już funkcji w środowisku R można również tworzyć własne funkcje dostosowane do naszych potrzeb. Schemat tworzenia funkcji jest następujący
+<<eval=FALSE>>=
+nazwa_funkcji <- function(lista_argumentow){
+  polecenia
+}
+@
+Warto przyjąć zasadę przy tworzeniu funkcji, że im jest ona krótsza, tym lepiej - łatwiej ją modyfikować i znajdować ewentualne błedy.\\ 
+Jeśli w kodzie wykorzystujemy jakieś stałe warto pomyśleć, czy nie dodać tej stałej jako argumentu funkcji, który może przyjmować różne wartości.
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady własnych funkcji}
+<<>>=
+moja.silnia <- function(n)
+{
+  x <- 1
+  for (i in 1:n) 
+  {
+    x=x*i
+  }
+  print(x)
+}
+
+moja.silnia(4)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Przykłady własnych funkcji}
+<<>>=
+ktory.dzisiaj <- function()
+{
+  cat("R mowi, ze dzis jest ")
+  cat(format(Sys.time(), "%A %d %B"))
+}
+
+ktory.dzisiaj()
+@
+\end{frame}
+
+\begin{frame}{Pierwsze kroki programowania - ćwiczenia}
+\footnotesize{
+\begin{itemize}
+\item Stwórz wektor x, korzystając z funkcji sample(1:35). Następnie stwórz wektor y, który dla każdego elementu wektora x zwracałby wartość funkcji
+\[f(x) = \begin{cases}
+    0 & \text{if } x\geq 6\\
+    x-4 & \text{if } 6 < x \geq 10 \\
+    36-x & \text{if } 10 < x \geq 35
+\end{cases}
+\]
+\item Stwórz funkcję, która dla wektorów x i y o tej samej długości, wyznacza następujące macierze:
+\begin{itemize}
+\item macierz A, której elementy to $a_{ij} = x_i * y_j$.
+\item macierz B, której elementy to $b_{ij} = x_i / y_j$.
+\item wektor d, której elementy to $d_{i} = x_i * y_i$.
+\item main - nazwa wykresu
+\end{itemize}
+\item Stwórz funkcję, która jako argument przyjmuje wektor liczb, a jako wynik zwraca 3 najmniejsze i 3 największe liczby. Jeśli podany wektor jest krótszy niż 3 liczby, to wyświetl napis "za krótki argument".
+\item Stwórz funkcję zależną od parametru n, która zwraca n liczb naturalnych, które nie zawierają liczb 2 i 3 jako dzielników.
+\end{itemize}
+}
+\end{frame}
+
+\section{Jak to zobaczyć?}
+\subsection{Funkcje plot, lines, curve}
+
+\begin{frame}[fragile]{Funkcja \emph{plot()} i \emph{lines()}}
+\texttt{plot(x, y, type = "b", col = "black", main = NULL, ...)\\
+lines(x, y = NULL, type = "b", ...)
+}
+\begin{block}{Przydatne parametry funkcji \emph{plot()} i \emph{lines()}}
+\begin{itemize}
+\item type - rodzaj linii
+\item col - kolor linii
+\item main - nazwa wykresu
+\item xlab/ylab - etykieta osi x/y
+\item cex - wielkość czcionki
+\item lwd - szerokość linii
+\end{itemize}
+\end{block}
+
+<<eval=FALSE>>=
+x <- seq(.1,4,by=.5)
+plot(x, log(x), type = "b", main = "Wykres funkcji logarytmicznej 
+     i kwadratowej", col = "blue")
+lines(x, x^2-2, type = "l", col = "red")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{plot()} i \emph{lines()}}
+<<echo=FALSE, opts_chunk$set(fig.width=9,fig.height=7,out.width=9.1,out.height=7.1)>>=
+x <- seq(.1,4,by=.5)
+plot(x, log(x), type="b", main="Wykres funkcji \nlogarytmicznej i kwadratowej",
+     ylab='y', col="blue",cex.main=.8)
+lines(x, x^2-2, type="l", col="red")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{curve()} }
+\texttt{curve(expr, from = NULL, to = NULL, n = 101, ...)
+}
+\begin{block}{Przydatne parametry funkcji \emph{curve()}}
+\begin{itemize}
+\item expr - nazwa funkcji lub wyrażenie matematyczne
+\item from/to - zakres przedziału, w którym funkcja jest rysowana
+\item n - ilość argumentów, dla których wartość funkcji jest liczona
+\item add - jeśli TRUE dodaje wykres do już istniejącego
+\end{itemize}
+\end{block}
+
+<<eval=FALSE>>=
+curve(cos, from = -2*pi, to = 2*pi, type = "l", col = "blue")
+curve(sin, from = -2*pi, to = 2*pi, type = "l", col = "red", add = T)
+@
+\end{frame}
+
+\begin{frame}{Funkcja \emph{curve()}}
+<<echo=FALSE>>=
+curve(cos, from = -2*pi, to = 2*pi, type = "l", col = "blue")
+curve(sin, from = -2*pi, to = 2*pi, type = "l", col = "red", add = T)
+@
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dodatkowe elementy związane z tworzeniem wykresów}
+
+\begin{frame}{Wykres na indywidualne potrzeby}
+\footnotesize{
+\begin{block}{Dodatkowe argumenty funkcji graficznych}
+\begin{itemize}
+\item adj - wyrównanie tekstu np. etykiet osi
+\item ann - określenie, czy etykiety osi mają być wpisywane
+\item bg/fg - kolor tła/"pierwszego planu" 
+\item bty - kontrolowanie rysowania ramki wokół wykresu
+\item cex/cex.axis/cex.lab/cex.main - skala rozmiaru tekstu (domyślnie ma wartość 1, dla innych wartości jest przeskalowywany) na całym rysunku/ osiach/ etykietach/ tytule 
+\item family/font - typ czcionki/styl czcionki
+\item las - kierunek tekstu na osiach
+\item lty/lwd - wzór linii/grubość linii
+\item pch - wybór symbolu, który ma być użyty do zaznaczania punktów na wykresie
+\item xaxt/yaxt - określa, czy oś X/Y ma być rysowana
+\item xlim/ylim - zakres danych umieszczony na osi X/Y
+\end{itemize}
+\end{block}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Wykres na indywidualne potrzeby}
+<<fig.height=3.2>>=
+x<-seq(-2*pi, 2*pi, length.out = 100)
+plot(x, sin(x), family = "sans", cex.lab = 1.3, cex.axis = 0.7, 
+     font.axis = 4, las = 1, lwd = 3, pch = 3)
+@
+\end{frame}
+
+
+\begin{frame}{Tytuł, opisy osi wykresu}
+\footnotesize{
+\texttt{title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, line = NA, ...)}
+\begin{block}{Przydatne parametry funkcji \emph{title()}}
+\begin{itemize}
+\item main - tytuł wykresu
+\item sub - podtytuł wykresu
+\item xlab/ylab - etykiety osi x/y
+\item line - określa odległość od brzegu okna graficznego; liczony jest w liniach tekstu
+\end{itemize}
+\end{block}
+
+\texttt{axis(side, at = NULL, labels = TRUE, tick = TRUE, pos = NA, ...)}
+
+\begin{block}{Przydatne parametry funkcji \emph{axis()}}
+\begin{itemize}
+\item side - określa po której stronie wykresu będą rysowane osie
+\item at - wektor punktów, w których rysowane są znaczniki
+\item labels - określa czy i jakie oznaczenia mają być umieszczone przy znacznikach
+\item tick - określa, czy znaczniki mają czy umieszczane
+\item pos - określa pozycję umieszczenia osi; liczony jest we współrzędnych rysunku
+\end{itemize}
+\end{block}
+}
+\end{frame}
+
+
+\begin{frame}[fragile]{Funkcja \emph{title()} i \emph{axis()}}
+<<fig.height=3.2, fig.width=6>>=
+plot(x, sin(x), type = "l", col = "red", yaxt = "n")
+title(main = "Funkcja sinus", sub = "to funkcja okresowa")
+axis(side = 4, at = c(-1, 0, 1), labels = c("min", "zero", "max"), 
+     cex.axis = 0.7, las=1)
+@
+\end{frame}
+
+
+\begin{frame}{Legenda wykresu}
+\footnotesize{
+\texttt{legend(x, y = NULL, legend, fill = NULL, border = "black", col, lty, lwd, pch, bty = ' o", x.intersp = 1, text.width = NULL, ncol = 1, horiz = FALSE, title = NULL, ...)}
+\begin{block}{Parametry funkcji \emph{text()}}
+\begin{itemize}
+\item x/y - współrzędne, gdzie legenda ma być umieszczona (może być również umieszczony jako napis np. "top")
+\item legend - wektor opisów, które mają być umieszczone w legendzie
+\item fill - określa kolor, jakim mają być rysowane kwadraty przy opisach legendy
+\item lwd/lty - parametry linii, ktore mają być rysowane przy kolejnych wykresach (występują też odpowiedniki tych argumentów dotuczące ogramowania całej legendy np. box.lty itp)
+\item x.intersp/yintersp - kontrola odległości pomiędzy pionowymi/poziomymi elementami legendy
+\item ncol - liczba kolumn, w których mają być opisy
+\item horiz - określa, czy kolejne opisy mają być umieszczanie pionowo, czy poziomo
+\end{itemize}
+\end{block}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{legend()}}
+<<fig.height=3.2, fig.width=6>>=
+plot(x, x, type = "l", col = 1)
+lines(x, x^2, type = "l", col = 2)
+lines(x, x^3, type = "l", col = 3)
+legend("bottomright", c(expression(x), expression(x^2), expression(x^3)), 
+       fill = 1:3, ncol = 2, bty = "n") 
+@
+\end{frame}
+
+
+\begin{frame}{Napisy na wykresie}
+\texttt{text(x, y = NULL, labels = seq\_along(x), srt, ...)}
+\begin{block}{Parametry funkcji \emph{text()}}
+\begin{itemize}
+\item x/y - współrzędne, gdzie tekst ma być umieszczony
+\item labels - tekst, który ma być umieszczony
+\item srt - kąt nachylenia tekstu do osi X
+\end{itemize}
+\end{block}
+
+\texttt{mtext(text, side = 3, line = 0, outer = FALSE, at = NA, ...)}
+\begin{block}{Parametry funkcji \emph{mtext()}}
+\begin{itemize}
+\item text - tekst, który ma być umieszczony
+\item side - strona wykresu, po której ma być wykres umieszczony
+\item line - odlegość (mierzona w liniach tekstu) od krawędzi wykresu, gdzie wykres ma być umieszczony
+\item outer - użycie zewnętrzych mrginesów
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{text()} i \emph{mtext()}}
+<<fig.height=3.2, fig.width=6>>=
+plot(x, x^2-3, type = "l", col = "red", ylab = "y")
+mtext(expression(x^2-3), 3, line= 2)
+text(-pi, 0.5, "... to funkcja okresowa", srt = 45)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Wiele wykresów na rysunku}
+Do wywołania kilku wykresów na jednym rysunku może posłużyć funkcja \texttt{par(mfrow=c(k,l))} lub \texttt{par(mfcol=c(k,l))}. Różnią się one kierunkiem umieszczania kolejnych wykresów (od lewej do prawej lub od góry do dołu).
+<<fig.height=3>>=
+par(mfrow = c(1, 2))
+plot(x, sin(x), type = "l", col = "red")
+plot(x, cos(x), type = "l", col = "red")
+@
+\end{frame}
+
+\subsection{Histogramy}
+\begin{frame}[fragile]{Funkcja \emph{hist()}}
+\texttt{hist(x, breaks = 'Sturges', freq = NULL, probability = !freq, plot = TRUE, labels = FALSE, ...)}
+\begin{block}{Przydatne parametry funkcji \emph{hist()}}
+\begin{itemize}
+\item breaks - podział zakresu zmienności
+\item freq - wybór, czy wykres ma wykorzystywać frakcje, czy liczebności
+\item plot - czy wykres ma być rysowany, czy tylko dane do wykresu mają być wyznaczone
+\item labels - wektor nazw, które mają odpowiadać kolejnym podziałom
+\end{itemize}
+\end{block}
+
+<<eval=FALSE>>=
+attach(TitanicSurvival)
+hist(age, main = "Przezycie na Tytanicu")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{hist()}}
+<<echo=FALSE,fig.height=3.5>>=
+attach(TitanicSurvival)
+hist(age, main = "Przezycie na Tytanicu")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{hist()}}
+<<fig.width=5,fig.height=3.5>>=
+hist(age, breaks=10, freq=F, main = "Przezycie na Tytanicu")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{hist()}}
+<<fig.width=5,fig.height=3.2>>=
+plot(density(age, bw=0.5, na.rm = T), 
+     main = "Przezycie na Tytanicu", col = "red")
+hist(age, breaks=10, freq=F, add=T)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{histbackback()}\{Hmisc\}}
+<<fig.width=5,fig.height=3.2, message=FALSE>>=
+library("Hmisc")
+grupy <- split(age, sex)
+histbackback(grupy, brks = (0:10)*8, probability = T)
+@
+\end{frame}
+
+\subsection{Boxplot}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+\texttt{boxplot(formula, data = NULL, ..., subset, na.action = NULL)
+}
+\begin{block}{Przydatne parametry funkcji \emph{boxplot()}}
+\begin{itemize}
+\item formula - zapisujemy jako y ~ zmienna grupująca, pozwala na stworzenie kilku boxplotów, każdy na podstawie danych z jednej grupy
+\item subset - wektor określający, podzbiór użytych danych
+\item outline - jeśli ma wartość TRUE wartości odstające mają być rysowane
+\item notch - jeśli ma wartość TRUE na wykresie zaznaczany jest przedział
+ufności dla mediany
+\item horizontal - określenie orientacji rysowanych wykresów
+\end{itemize}
+\end{block}
+
+<<eval=FALSE>>=
+boxplot(age ~ passengerClass)
+title("Wiek pasazerow w zaleznosci od klasy")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+<<echo=FALSE, fig.width=5,fig.height=3.8>>=
+boxplot(age ~ passengerClass)
+title("Wiek pasazerow w zaleznosci od klasy")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+<<fig.width=5,fig.height=3.2>>=
+boxplot(age ~ sex, subset = passengerClass == "1st", notch = T)
+title("Wiek pasazerow I klasy w zaleznosci od plci")
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+<<fig.width=5,fig.height=3.2>>=
+boxplot(age ~ sex, subset = 
+        passengerClass == "3rd", notch = T) 
+title("Wiek pasazerow III klasy w zaleznosci od plci")
+@
+\end{frame}
+
+
+\subsection{Wykresy słupkowe}
+
+\begin{frame}[fragile]{Funkcja \emph{barplot()}}
+\texttt{barplot(height, width = 1, space = NULL, names.arg = NULL,  beside = FALSE, horiz = FALSE, density = NULL, angle = 45, ...)
+}
+\begin{block}{Przydatne parametry funkcji \emph{boxplot()}}
+\begin{itemize}
+\item height - dane, które mają być umieszczone na wykresie
+\item width - szerokość kolumn
+\item space - odległość pomiędzy kolumnami (mierzona jako procent szerokości)
+\item names.arg - nazwy elementów umieszczone pod kolumnami
+\item beside - jeśli TRUE kolumny z jednej grupy są rysowane jedna nad drugą, w przeciwnym razie są rysowane obok siebie
+\end{itemize}
+\end{block}
+
+<<eval=FALSE>>=
+barplot(table(survived,sex), width = 1)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+<<fig.width=5,fig.height=3.8>>=
+barplot(table(survived, sex), width = 1)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{boxplot()}}
+<<fig.width=5,fig.height=3.5>>=
+barplot(table(survived, sex), horiz = T, beside = T, width = 1)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{dotchart()}}
+<<fig.width=5,fig.height=3.5>>=
+dotchart(table(survived,sex))
+@
+\end{frame}
+
+\begin{frame}[fragile]{Funkcja \emph{dotchart()}}
+<<fig.width=5,fig.height=3.2>>=
+dane<-table(survived,sex)
+srednie<-rowMeans(dane)
+dotchart(dane, gdata = srednie, pch = 20, gpch = 7, lwd = 3, 
+         gcolor = "blue", lcolor = "green")
+@
+\end{frame}
+ 
+\begin{frame}{Inne przydatne funkcje graficzne}
+\begin{itemize}
+\item \emph{abline()} - rysowanie prostych
+\item \emph{arrows()} - rysowanie strzałek
+\item \emph{polygon()} - rysowanie krzywych zamkniętych
+\item \emph{rect()} - rysowanie prostokątów
+\item \emph{symbols()} - rysowanie symboli
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Wykresy - ćwiczenia}
+\footnotesize{
+\begin{itemize}
+\item Wczytaj dane Studenci.xlsx. Na jego podstawie proszę stworzyć wykres rozrzutu (funkcja \emph{plot()} typu punktowego), gdzie na osi X znajdować się będzie wiek studentów, a na osi Y wysokość stypendium. Proszę zaznaczyć kolorem czerwonym kobiety, a niebieskim mężczyzn. Znaczniki danych niech bedą zamalowanymi kropkami. Nazwij osie wykresu.
+
+\item Utwórz wykres dwuczęściowy z wykorzystaniem funkcji \emph{par()} i parametru \texttt{mfrow}. \\
+Na górnym wykresie narysuj w przedziale $[-5, 5]$ następujące funkcje:\\
+$y = x^2$; $y = (x-2)^2$; $y = (x-2)^2+3$; $y = x^2+3$; $y = (x+1)^2-2$.\\
+Dodaj linie $y = 0$ w kolorze czarnym. Każda funkcja niech będzie narysowana innym kolorem. Zaznacz punkty odpowiadające argumentom $-0.2$ i $0.8$. Na wykresie umieść legendę z opisem wzorów. Nadaj tytuł: "Wykresy funkcji przesunietych" i dodaj w dowolnym miejscu tekst: "Wykonał(a)...". \\ 
+Na dolnym wykresie narysuj na podstawie pliku Studenci.xlsx histogram dla wysokości stypendium z podziałem na płeć.
+
+\item Na podstawie danych TitanicSurvival wykonaj opisujący przeżycie pasażerów różnych klas. Dodaj etykiety klas. Dodaj tekst określający dokładne wartości. Zaznacz średnie wartości na wykresie. 
+\end{itemize}
+}
+\end{frame}
+\end{document}
+
+
